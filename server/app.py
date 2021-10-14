@@ -1,9 +1,66 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+import logging
+import boto3
+from botocore.exceptions import ClientError
+import os
+
+AWS_ACCESS_ID = os.environ['AWS_ACCESS_ID']
+AWS_SECRET = os.environ['AWS_SECRET']
+
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=AWS_ACCESS_ID,
+    aws_secret_access_key=AWS_SECRET,
+)
 
 app = Flask(__name__)
 
-@app.route("/")
+# Use this for getting list of model files on S3
+@app.route("/", methods=['GET'])
+def get_models_list():
+    
+    return jsonify({
+        "id": AWS_ACCESS_ID,
+        "secret": AWS_SECRET,
+    })
 
-def hello_world():
-    return "<h1>Hello world!</h1>"
 
+# Use this for getting signed URL and for uploading using signed URL
+@app.route("/signed", methods=['POST'])
+def get_signed():
+
+    data = request.get_json()
+
+    try:
+        url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={
+                'Bucket': 'hosted-models',
+                'Key': data['id'],
+            }
+        )
+
+        return jsonify({
+            'url': url,
+        })
+    except ClientError as e:
+            logging.error(e)
+
+
+
+
+    return "<h1>POST presigned URL</h1>"
+
+
+# Use this for returning predictions
+@app.route("/predict", methods=['POST'])
+def predict_models():
+    return "<h1>Predict models</h1>"
+
+# source <venv>/Scripts/activate
+
+# /signed GET & PUT
+# /predict?model=:model
+# root GET models
+#secret access key: GPjN7042yuOeJB+fQg+OoKdJWhr3NDPg4IJlC+Dl
+#access key id: AKIAWDDQJVFYPWAS7U4Q

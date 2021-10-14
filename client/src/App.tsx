@@ -14,7 +14,7 @@ function App() {
             <Table />
           </div>
           <div className="col">
-            <h1>Col 2</h1>
+            <h3>Model Upload</h3>
           </div>
         </div>
       </div>
