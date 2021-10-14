@@ -62,5 +62,3 @@ def predict_models():
 # /signed GET & PUT
 # /predict?model=:model
 # root GET models
-#secret access key: GPjN7042yuOeJB+fQg+OoKdJWhr3NDPg4IJlC+Dl
-#access key id: AKIAWDDQJVFYPWAS7U4Q
