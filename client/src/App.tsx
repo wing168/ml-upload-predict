@@ -1,7 +1,15 @@
-import './App.css'
+import { useState } from 'react';
+
 import Table from './components/Table/Table';
+import Dropzone from './components/Dropzone/Dropzone';
+
+import './App.css'
 
 function App() {
+
+  const [fileInfo, setFileInfo] = useState({});
+  const [fileData, setFileData] = useState();
+
   return (
     <div className="App">
       <header className="header-bar">
@@ -10,11 +18,12 @@ function App() {
       <div className="container-fluid">
         <div className="row">
           <div className="col">
-            <h3>Hosted models</h3>
+            <h4>Hosted models</h4>
             <Table />
           </div>
           <div className="col">
-            <h3>Model Upload</h3>
+            <h4>Model Upload</h4>
+            <Dropzone />
           </div>
         </div>
       </div>
