@@ -23,7 +23,10 @@ function App() {
           </div>
           <div className="col">
             <h4>Model Upload</h4>
-            <Dropzone />
+            <Dropzone 
+              setFileInfo={setFileInfo}
+              setFileData={setFileData}
+            />
           </div>
         </div>
       </div>
