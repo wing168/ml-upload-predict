@@ -1,11 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback, Dispatch, SetStateAction } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 
 import './Dropzone.styles.css';
 
-const Dropzone = () => {
+interface propInterface {
+    setFileInfo: Dispatch<SetStateAction<object>>,
+    setFileData: Dispatch<SetStateAction<any>>,
+}
+
+const Dropzone = ({ setFileInfo, setFileData } : propInterface) => {
 
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file: any) => {
@@ -14,8 +19,11 @@ const Dropzone = () => {
             reader.onabort = () => console.log('file was aborted');
             reader.onerror = () => console.log('error with file');
             reader.onload = () => {
-                console.log(reader.result);
+                console.log(typeof(reader.result));
                 console.log(file);
+
+                setFileInfo(file);
+                setFileData(reader.result);
             }
             reader.readAsArrayBuffer(file);
         });

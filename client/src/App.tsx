@@ -7,8 +7,8 @@ import './App.css'
 
 function App() {
 
-  const [fileInfo, setFileInfo] = useState({});
-  const [fileData, setFileData] = useState();
+  const [fileInfo, setFileInfo] = useState<object>({});
+  const [fileData, setFileData] = useState<object>();
 
   return (
     <div className="App">
