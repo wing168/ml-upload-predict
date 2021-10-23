@@ -5,12 +5,12 @@ import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 
 import './Dropzone.styles.css';
 
-interface propInterface {
-    setFileInfo: Dispatch<SetStateAction<object>>,
+interface Props {
+    setFileInfo: Dispatch<SetStateAction<{ name: string, size: number, type: string }>>,
     setFileData: Dispatch<SetStateAction<any>>,
 }
 
-const Dropzone = ({ setFileInfo, setFileData } : propInterface) => {
+const Dropzone = ({ setFileInfo, setFileData } : Props) => {
 
     const onDrop = useCallback((acceptedFiles) => {
         acceptedFiles.forEach((file: any) => {
@@ -19,8 +19,6 @@ const Dropzone = ({ setFileInfo, setFileData } : propInterface) => {
             reader.onabort = () => console.log('file was aborted');
             reader.onerror = () => console.log('error with file');
             reader.onload = () => {
-                console.log(typeof(reader.result));
-                console.log(file);
 
                 setFileInfo(file);
                 setFileData(reader.result);

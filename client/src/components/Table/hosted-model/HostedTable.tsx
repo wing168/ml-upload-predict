@@ -1,6 +1,6 @@
-import './Table.styles.css';
+import './HostedTable.styles.css';
 
-const Table = () => {
+const HostedTable = () => {
     return (
         <div className='model-table'>
             <table className="table table-striped">
@@ -31,4 +31,4 @@ const Table = () => {
     )
 }
 
-export default Table;
+export default HostedTable;

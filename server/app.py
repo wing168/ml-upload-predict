@@ -4,11 +4,13 @@ import boto3
 from botocore.exceptions import ClientError
 import os
 
+
 AWS_ACCESS_ID = os.environ['AWS_ACCESS_ID']
 AWS_SECRET = os.environ['AWS_SECRET']
 
 s3_client = boto3.client(
     's3',
+    'eu-west-2',
     aws_access_key_id=AWS_ACCESS_ID,
     aws_secret_access_key=AWS_SECRET,
 )
@@ -25,7 +27,7 @@ def get_models_list():
     })
 
 
-# Use this for getting signed URL and for uploading using signed URL
+# Use this for getting signed URL
 @app.route("/signed", methods=['POST'])
 def get_signed():
 
@@ -33,7 +35,7 @@ def get_signed():
 
     try:
         url = s3_client.generate_presigned_url(
-            'get_object',
+            'put_object',
             Params={
                 'Bucket': 'hosted-models',
                 'Key': data['id'],
@@ -45,9 +47,9 @@ def get_signed():
         })
     except ClientError as e:
             logging.error(e)
-
-
-
+            return jsonify({
+                'error': e
+            })
 
     return "<h1>POST presigned URL</h1>"
 

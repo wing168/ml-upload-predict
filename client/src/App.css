@@ -17,4 +17,9 @@
   font-size: 20px;
 }
 
+button {
+  float: right;
+  margin-right: 15px;
+}
+
 
