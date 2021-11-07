@@ -1,2 +1,4 @@
 .env
 aws-access.txt
+tmp
+__mocks__
