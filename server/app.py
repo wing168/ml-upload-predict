@@ -3,9 +3,8 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 import os
-import xgboost
 import pandas as pd
-import numpy as np
+
 
 AWS_ACCESS_ID = os.environ['AWS_ACCESS_ID']
 AWS_SECRET = os.environ['AWS_SECRET']
