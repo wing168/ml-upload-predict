@@ -6,12 +6,14 @@ import os
 import pandas as pd
 
 
-AWS_ACCESS_ID = os.environ['AWS_ACCESS_ID']
-AWS_SECRET = os.environ['AWS_SECRET']
+AWS_ACCESS_ID = os.getenv('AWS_ACCESS_ID')
+AWS_SECRET = os.getenv('AWS_SECRET')
+
+print(AWS_ACCESS_ID, AWS_SECRET)
 
 s3_client = boto3.client(
     's3',
-    'eu-west-2',
+    region_name='eu-west-2',
     aws_access_key_id=AWS_ACCESS_ID,
     aws_secret_access_key=AWS_SECRET,
 )
@@ -23,8 +25,7 @@ app = Flask(__name__)
 def get_models_list():
     
     return jsonify({
-        "id": AWS_ACCESS_ID,
-        "secret": AWS_SECRET,
+        "test": 'test'
     })
 
 
@@ -60,10 +61,10 @@ def predict_models():
 
     # Get the model and zip file
     if (not os.path.exists('tmp/model.bin')):
-        s3_client.download_file('hosted-models', 'model.bin', 'tmp/model.bin')
+        s3_client.download_file('hosted-models', 'model.bin', '/tmp/model.bin')
     
     if (not os.path.exists('tmp/load_predict.py')):
-        s3_client.download_file('hosted-models', 'load_predict.py', 'tmp/load_predict.py')
+        s3_client.download_file('hosted-models', 'load_predict.py', '/tmp/load_predict.py')
 
     # Load model by calling load_predict module in load_predict.py
 
