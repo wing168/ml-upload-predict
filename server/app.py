@@ -4,7 +4,10 @@ import boto3
 from botocore.exceptions import ClientError
 import os
 import pandas as pd
+import sys
 
+print(sys.path)
+print('list directory', os.listdir('.'))
 
 AWS_ACCESS_ID = os.getenv('AWS_ACCESS_ID')
 AWS_SECRET = os.getenv('AWS_SECRET')
@@ -61,10 +64,10 @@ def predict_models():
 
     # Get the model and zip file
     if (not os.path.exists('tmp/model.bin')):
-        s3_client.download_file('hosted-models', 'model.bin', '/tmp/model.bin')
+        s3_client.download_file('hosted-models', 'model.bin', 'tmp/model.bin')
     
     if (not os.path.exists('tmp/load_predict.py')):
-        s3_client.download_file('hosted-models', 'load_predict.py', '/tmp/load_predict.py')
+        s3_client.download_file('hosted-models', 'load_predict.py', 'tmp/load_predict.py')
 
     # Load model by calling load_predict module in load_predict.py
 
